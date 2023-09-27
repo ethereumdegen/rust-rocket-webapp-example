@@ -1,0 +1,8 @@
+CREATE TABLE challenge_tokens (
+    id SERIAL PRIMARY KEY,
+
+    challenge VARCHAR(255) UNIQUE NOT NULL, 
+    public_address VARCHAR(255) NOT NULL, 
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
