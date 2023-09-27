@@ -9,6 +9,7 @@ This is a relatively simple web api template in rust that includes:
 
 So this is a comprehensive framework with everything you need to get started building a JSON-based api that reads and writes to a database through an HTTP server with custom logic. 
 
+Basically ruby-on-rails in rust .
 
 ## HOW TO TEST (without postman!)
 ```
