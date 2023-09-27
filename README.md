@@ -11,5 +11,14 @@ So this is a comprehensive framework with everything you need to get started bui
 
 
 ## HOW TO TEST (without postman!)
-cargo run 
-cargo run --bin test 
+```
+cargo build
+
+//need to set up postgres db and ENV vars for this step... 
+cargo run --bin migrate 
+
+cargo run
+
+// in another terminal -- lets you do POST requests
+cargo run --bin test
+```
