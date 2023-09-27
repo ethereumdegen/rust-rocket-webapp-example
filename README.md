@@ -17,6 +17,7 @@ cargo build
 //need to set up postgres db and ENV vars for this step... 
 cargo run --bin migrate 
 
+//boot the server and connect to the DB 
 cargo run
 
 // in another terminal -- lets you do POST requests
