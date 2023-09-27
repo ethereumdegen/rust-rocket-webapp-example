@@ -7,11 +7,11 @@ use crate::db::postgres::postgres_db::Database;
 use super::PublicAddress;
 use super::web_controller::{WebController ,RouteBinding};
   
- //use serde::{Serialize, Deserialize };
-//use rocket::serde::{Deserialize };
+use ethers::types::Address;
+ 
 
 use rocket::State;
-// use serde_json ;
+ 
  
 use rocket::serde::json::{Json, Value, json};
 use rocket::serde::{Serialize, Deserialize};
@@ -72,11 +72,11 @@ pub struct Challenge {
         ) -> Option<Json<Challenge>> {
        
        
-       let parsed_public_address = public_address.parse::<Address>().unwrap(); 
+       let parsed_public_address =  generate_challenge_input.public_address.clone().parse::<Address>().unwrap(); 
       
       //dont unwrap... return none if it fails 
       let new_challenge= ChallengesModel::create_new_challenge( 
-          generate_challenge_input.public_address.clone(),
+        parsed_public_address,
           db 
           ).await.unwrap();
       

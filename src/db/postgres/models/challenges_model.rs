@@ -9,6 +9,9 @@ use tokio::sync::Mutex;
 //use time::{format_description::well_known::Rfc3339, OffsetDateTime};
 use chrono::Utc;
 
+use ethers::utils::to_checksum;
+
+
 use crate::util::rand::generate_random_uuid;
  
  use siwe::{Message as SiweMessage, TimeStamp, VerificationOpts};
@@ -16,6 +19,7 @@ use crate::util::rand::generate_random_uuid;
 use rand::Rng;
 use rand::distributions::Alphanumeric;
 
+use ethers::types::Address;
 
 
 pub struct ChallengesModel {
@@ -35,15 +39,19 @@ pub struct ChallengesModel {
          
             let challenge =  generate_challenge_text(
                 domain,
-                 &*public_address              
+                 public_address              
             ) ;
+
+
+            let formatted_address = to_checksum(&public_address,None).to_string();
+
          
            let id = psql_db.execute("
             INSERT INTO challenge_tokens 
             ( public_address, challenge ) 
             VALUES ( $1,$2 );
             ", 
-            &[&public_address,&challenge]).await?;
+            &[&formatted_address,&challenge]).await?;
          
          Ok(challenge.into())
      }
@@ -69,6 +77,8 @@ pub struct ChallengesModel {
     let version = "1";
     let chain_id = "1"; 
     
+    let formatted_address = to_checksum(&public_address,None).to_string();
+
     
     //https://github.com/spruceid/siwe-rs 
 let msg = format!(
@@ -82,7 +92,7 @@ Version: {3}
 Chain ID: {4}
 Nonce: {5}
 Issued At: {6}",
-domain, public_address.to_checksum_address(), title, version, chain_id, nonce, current_timestamp
+domain, formatted_address, title, version, chain_id, nonce, current_timestamp
 );
   
   /* let msg = r#"localhost:8000 wants you to sign in with your Ethereum account:
