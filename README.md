@@ -1,7 +1,7 @@
 ## Rust Rocket Webapp Template 
 
 
-This is a very simple web api template in rust that includes:
+This is a relatively simple web api template in rust that includes:
 
 1) Model-Controller api backend using Rocket 
 2) Postgres database with Supabase(remote) or local DB support 
